@@ -192,7 +192,7 @@ jobs:
           cd openwrt
           make target/linux/clean
           make download -j"$(nproc)"
-                - name: Upload firmware
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: openwrt-nanopi-neo-firmware
