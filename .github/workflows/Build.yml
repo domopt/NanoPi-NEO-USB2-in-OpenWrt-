@@ -193,9 +193,9 @@ jobs:
           make target/linux/clean
           make download -j"$(nproc)"
           make -j"$(nproc)" || make -j1 V=s
-      - name: Upload firmware
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: openwrt-nanopi-neo-firmware
-          path: openwrt/bin/targets/sunxi/cortexa7/*
+          path: openwrt/bin/targets/sunxi/cortexa7/**/*.img.gz
 
