@@ -184,7 +184,6 @@ jobs:
           # Squid
           echo "CONFIG_PACKAGE_squid=y" >> .config
           
-          # Обязательный запуск defconfig после внесения правок
           make defconfig
 
       - name: Build
@@ -193,6 +192,15 @@ jobs:
           make target/linux/clean
           make download -j"$(nproc)"
           make -j"$(nproc)" || make -j1 V=s
+      - name: Проверка собранных файлов
+        run: |
+          echo "=== Текущая директория ==="
+          pwd
+          echo "=== Поиск всех образов ==="
+          find . -type f -name "*.img*" -o -name "*.bin" -o -name "*.gz" 2>/dev/null || true
+          echo "=== Структура папок targets ==="
+          ls -R bin/targets/ 2>/dev/null || ls -R openwrt/bin/targets/ 2>/dev/null || echo "Папка targets не найдена!"
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
